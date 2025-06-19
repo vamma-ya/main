@@ -60,17 +60,15 @@ void sendData(const std::string& serverIp, int port, const std::string& info, co
         return;
     }
 
-    // Отправка текстовой информации
     send(sock, info.c_str(), (int)info.length(), 0);
-    send(sock, "\n", 1, 0);  // Разделитель
+    send(sock, "\n", 1, 0);
 
-    // Отправка скриншота
     std::ifstream file(screenshotPath, std::ios::binary);
     char buffer[1024];
     while (file.read(buffer, sizeof(buffer))) {
         send(sock, buffer, (int)file.gcount(), 0);
     }
-    send(sock, buffer, (int)file.gcount(), 0); // Остаток
+    send(sock, buffer, (int)file.gcount(), 0); 
 
     file.close();
     closesocket(sock);
